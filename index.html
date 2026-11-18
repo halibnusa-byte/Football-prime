@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909"><meta name="description" content="Dein persönlicher Fußball-Comeback-Tracker">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg">
+<title>FOOTBALL PRIME</title>
+<style>
+:root{--bg:#090909;--panel:#151515;--panel2:#202020;--gold:#d8ad45;--gold2:#f4d987;--muted:#aaa;--line:#393124}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#29200d 0,#090909 48%);color:#f7f2e7;font:16px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+header{padding:24px 18px 16px;text-align:center}.brand{letter-spacing:4px;font-weight:900;color:var(--gold2);font-size:13px}.hero{font-size:30px;font-weight:900;margin:8px 0 4px}.sub{color:var(--muted);font-size:13px}
+main{max-width:720px;margin:auto;padding:0 14px 100px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}
+.stat,.card{background:linear-gradient(145deg,#1b1a17,#111);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat b{display:block;color:var(--gold2);font-size:23px}.stat span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.progress{height:9px;background:#39352b;border-radius:9px;overflow:hidden;margin:9px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#a8781b,#ffe29a);width:0}
+h2{font-size:18px;margin:22px 2px 10px;color:var(--gold2)}.muted{color:var(--muted);font-size:13px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:5px;background:#101010ed;border-top:1px solid var(--line);padding:9px 6px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(12px);z-index:5}
+nav button{flex:1;max-width:150px;background:transparent;border:0;color:#aaa;padding:9px 3px;border-radius:10px;font-size:12px}nav button.active{background:#302510;color:var(--gold2)}
+button,.btn{border:1px solid #8c6a24;background:linear-gradient(135deg,#d9b454,#9d741f);color:#171107;font-weight:800;padding:11px 14px;border-radius:11px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.mission{margin:10px 0}.mission h3{margin:0 0 4px;font-size:16px}.task{display:flex;gap:9px;align-items:flex-start;padding:8px 0;color:#ddd;font-size:14px}.task input{accent-color:#d8ad45;width:18px;height:18px}.pill{font-size:11px;color:var(--gold2);border:1px solid #725821;padding:4px 8px;border-radius:20px}
+.smallbtn{padding:8px 10px;font-size:12px}.badge{display:inline-block;padding:9px;border:1px solid var(--line);border-radius:12px;margin:4px;background:#17140e}.locked{filter:grayscale(1);opacity:.5}
+input[type=date]{background:#111;color:#fff;border:1px solid var(--line);padding:9px;border-radius:9px}
+.hidden{display:none}.gold{color:var(--gold2)}.notice{background:#211b10;border:1px solid #5d481f;padding:12px;border-radius:12px;font-size:13px;color:#e9d8ad}
+</style>
+</head>
+<body>
+<header><div class="brand">⚽ FOOTBALL PRIME</div><div class="hero">YOUR COMEBACK.</div><div class="sub">Train smart. Play fast. Become your PRIME.</div></header>
+<main>
+<section id="home">
+ <div class="stats">
+  <div class="stat"><b id="flames">🔥 0</b><span>Flammen</span></div>
+  <div class="stat"><b id="xp">0</b><span>XP</span></div>
+  <div class="stat"><b id="level">1</b><span>Level</span></div>
+ </div>
+ <div class="card"><div class="row"><strong class="gold">LEVEL FORTSCHRITT</strong><span class="muted" id="xptext">0 / 150 XP</span></div><div class="progress"><i id="bar"></i></div><div class="muted" id="next">150 XP bis Level 2</div></div>
+ <h2>Diese Woche</h2><div id="week"></div>
+ <div class="notice">Dienstag ist dein Ruhetag. Ruhetage kosten keine Flammen. Hör auf deinen Körper und mach bei Schmerzen oder starker Müdigkeit Pause.</div>
+</section>
+<section id="missions" class="hidden"><h2>Deine Missionen</h2><p class="muted">Hake alle Aufgaben ab. Danach kannst du die Einheit einmal abschließen.</p><div id="missionlist"></div></section>
+<section id="stats" class="hidden"><h2>Spielerprofil</h2><div class="card"><div class="hero gold" id="profilelevel">LEVEL 1</div><p class="muted">Deine Trainings zählen – die Werte sind keine Messung deiner tatsächlichen Leistung.</p><div id="skillstats"></div></div><h2>Trainingshistorie</h2><div class="card" id="history">Noch keine Trainings abgeschlossen.</div></section>
+<section id="awards" class="hidden"><h2>Trophäen & Erfolge</h2><div id="badges"></div></section>
+<section id="settings" class="hidden"><h2>Einstellungen</h2><div class="card"><p>Woche zurücksetzen: Neue Trainingswoche beginnen, XP und Erfolge bleiben erhalten.</p><button id="resetweek" class="smallbtn">Woche zurücksetzen</button><hr style="border-color:#393124;margin:18px 0"><p>Alle Daten auf diesem Gerät löschen.</p><button id="resetall" class="smallbtn">Alles zurücksetzen</button></div><h2>Installation</h2><div class="notice">Wenn du diese App über eine HTTPS-Webadresse öffnest, kannst du im Browser-Menü „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen.</div></section>
+</main>
+<nav>
+<button class="active" data-tab="home">⌂<br>Home</button><button data-tab="missions">◎<br>Missionen</button><button data-tab="stats">▥<br>Stats</button><button data-tab="awards">♛<br>Pokale</button><button data-tab="settings">⚙<br>Mehr</button>
+</nav>
+<script>
+const plan=[
+{day:"Montag",title:"Technik zuhause / Garten",tasks:["5 Min. Ballgefühl oder kontrollierte Fußwechsel","5 Min. Koordination und leichte Bewegungen","5 Min. lockere Ballführung (wenn Platz vorhanden)"],skill:"control"},
+{day:"Mittwoch",title:"Dribbling im Garten",tasks:["Aufwärmen: 5 Min. locker bewegen","Enge Ballführung mit beiden Füßen","Richtungswechsel und Tempowechsel üben"],skill:"dribble"},
+{day:"Donnerstag",title:"Technik zuhause",tasks:["Ballgefühl ohne harten Schuss","Koordination und Gleichgewicht","Beidfüßige Ballkontakte oder Passbewegungen ohne Ball"],skill:"control"},
+{day:"Freitag",title:"Speed & Technik draußen",tasks:["Gründlich aufwärmen","4–6 kurze, kontrollierte Antritte mit voller Pause","Dribbling mit Tempowechsel"],skill:"speed"},
+{day:"Samstag",title:"Fußball mit Freunden",tasks:["Mit Freunden spielen","Beidfüßig passen und anspielbar bleiben","Dribblings passend zur Spielsituation ausprobieren"],skill:"dribble"},
+{day:"Sonntag",title:"Fußball mit Freunden",tasks:["Mit Freunden spielen","Vor der Ballannahme umschauen","Präzise Pässe und gute Entscheidungen üben"],skill:"passing"}];
+let data=JSON.parse(localStorage.getItem("fp-data")||'{"xp":0,"flames":0,"completed":[],"checks":{},"skills":{"speed":0,"dribble":0,"passing":0,"control":0},"history":[]}');
+function save(){localStorage.setItem("fp-data",JSON.stringify(data));render()}
+function level(){return Math.floor(data.xp/150)+1}
+function render(){
+ document.getElementById("xp").textContent=data.xp;document.getElementById("flames").textContent="🔥 "+data.flames;document.getElementById("level").textContent=level();
+ let rem=data.xp%150;document.getElementById("xptext").textContent=rem+" / 150 XP";document.getElementById("bar").style.width=(rem/150*100)+"%";document.getElementById("next").textContent=(150-rem)+" XP bis Level "+(level()+1);
+ document.getElementById("profilelevel").textContent="LEVEL "+level();
+ document.getElementById("week").innerHTML=plan.map((p,i)=>`<div class="card mission"><div class="row"><strong>${p.day}</strong><span class="pill">${data.completed.includes(i)?"✓ Erledigt":"+50 XP"}</span></div><div class="muted">${p.title}</div></div>`).join("");
+ document.getElementById("missionlist").innerHTML=plan.map((p,i)=>`<div class="card mission"><div class="row"><h3>${p.day}</h3><span class="pill">${data.completed.includes(i)?"Abgeschlossen":"+50 XP"}</span></div><div class="muted">${p.title}</div>${p.tasks.map((t,j)=>`<label class="task"><input type="checkbox" data-check="${i}-${j}" ${data.checks[i+"-"+j]?"checked":""} ${data.completed.includes(i)?"disabled":""}><span>${t}</span></label>`).join("")}<button data-finish="${i}" ${data.completed.includes(i)||!p.tasks.every((_,j)=>data.checks[i+"-"+j])?"disabled":""}>Mission abschließen 🔥</button></div>`).join("");
+ document.getElementById("skillstats").innerHTML=Object.entries({speed:"Speed ⚡",dribble:"Dribbling 🪄",passing:"Pässe 🎯",control:"Ballkontrolle ⚽"}).map(([k,n])=>`<p>${n}: <b class="gold">${data.skills[k]} Einheiten</b></p>`).join("");
+ document.getElementById("history").innerHTML=data.history.length?data.history.slice().reverse().map(x=>`<p>✓ ${x}</p>`).join(""):"Noch keine Trainings abgeschlossen.";
+ let awards=[["🥉","Erster Schritt","Erste Mission",data.completed.length>=1],["🔥","Flammenstarter","Drei Missionen",data.completed.length>=3],["🏆","Wochenkrieger","Sechs Missionen",data.completed.length>=6],["⭐","100 XP Club","100 XP gesammelt",data.xp>=100],["👑","Prime Player","Level 10 erreicht",level()>=10]];
+ document.getElementById("badges").innerHTML=awards.map(a=>`<div class="badge ${a[3]?"":"locked"}">${a[0]} <b>${a[1]}</b><br><span class="muted">${a[2]} · ${a[3]?"Freigeschaltet":"Gesperrt"}</span></div>`).join("");
+}
+document.addEventListener("change",e=>{if(e.target.dataset.check){data.checks[e.target.dataset.check]=e.target.checked;save()}});
+document.addEventListener("click",e=>{let i=e.target.dataset.finish;if(i!==undefined){i=Number(i);if(data.completed.includes(i))return;data.completed.push(i);data.xp+=50;data.flames+=1;data.skills[plan[i].skill]++;data.history.push(plan[i].day+" – "+plan[i].title);save()}});
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll("main section").forEach(s=>s.classList.toggle("hidden",s.id!==b.dataset.tab))});
+document.getElementById("resetweek").onclick=()=>{if(confirm("Wochenmissionen und Häkchen zurücksetzen? XP und Erfolge bleiben.")){data.completed=[];data.checks={};save()}};
+document.getElementById("resetall").onclick=()=>{if(confirm("Wirklich alle Daten löschen?")){localStorage.removeItem("fp-data");location.reload()}};
+render();if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
