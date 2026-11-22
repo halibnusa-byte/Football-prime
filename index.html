@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#08090c"><meta name="description" content="FOOTBALL PRIME 5.0 – Training, Spiele und Karriere"><title>FOOTBALL PRIME 5.0</title>
+<meta name="theme-color" content="#08090c"><meta name="description" content="Football Prime – Training, Spiele und Karriere"><title>Football Prime</title>
 <style>
 :root{--bg:#08090c;--c1:#101216;--c2:#171a20;--ac:#d6b34a;--tx:#f4f4f1;--mu:#9a9da5;--ok:#54c58a;--bad:#e45d68}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
@@ -36,7 +36,7 @@ nav button{min-width:0;background:none;color:var(--mu);border-radius:0;margin:0;
 .meter{height:7px;background:#ffffff18;border-radius:8px;overflow:hidden}.meter i{display:block;height:100%;background:var(--ac)}
 .tabs2{display:flex;gap:6px;overflow:auto;margin:8px 0}.tabs2 button{white-space:nowrap}
 
-/* FOOTBALL PRIME 5.0 – neue Bereiche; HOME und TRAINING bleiben unverändert */
+/* Football Prime – neue Bereiche; HOME und TRAINING bleiben unverändert */
 .fp5-hero{background:linear-gradient(135deg,#242016,#101216 62%,#08090c);border:1px solid #d6b34a55;border-radius:20px;padding:18px;margin:12px 0}
 .fp5-kicker{color:var(--ac);font-size:11px;letter-spacing:2px;font-weight:800}
 .fp5-stat{background:#ffffff09;border:1px solid #d6b34a22;border-radius:14px;padding:12px}
@@ -46,8 +46,13 @@ nav button{min-width:0;background:none;color:var(--mu);border-radius:0;margin:0;
 .fp5-tabs button{white-space:nowrap}
 .fp5-lock{border:1px solid #d6b34a66;background:#17140c;border-radius:14px;padding:14px}
 .fp5-notice{border-left:3px solid var(--ac);padding:9px 12px;background:#ffffff08;border-radius:8px;color:var(--mu);font-size:12px;margin:9px 0}
-</style></head><body>
-<header><h1 id="ttl">FOOTBALL PRIME</h1><small id="sub">Training. Spiele. Karriere.</small></header>
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head><body>
+<header><h1 id="ttl">Football Prime</h1><small id="sub">Training. Spiele. Karriere.</small></header>
 <main id="v"></main><nav id="nv"></nav><div id="ov"></div>
 <script>
 const KEY='footballprime2'; // gleicher Speicher-Schlüssel: vorhandene Trainingsdaten bleiben erhalten
@@ -64,10 +69,10 @@ const tot=(s,k)=>s.matches.reduce((a,m)=>a+(+m[k]||0),0);
 const hrs=s=>s.train.reduce((a,t)=>a+t.dur,0)/60;
 const today=()=>new Date().toISOString().slice(0,10);
 const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function def(){return{prof:null,attr:{Tempo:50,Dribbling:50,Passspiel:50,Schuss:50,Abschluss:50,Spielübersicht:50,Verteidigung:50,Ballkontrolle:50,Beweglichkeit:50,Ausdauer:50},hist:[],train:[],matches:[],xp:0,flames:0,claimed:{},missions:DM.slice(),lib:DL.slice(),videos:[],career:{club:'',history:[],offers:[],custom:[],mode:'player',season:1,matches:[]},set:{sound:true,vol:.5,theme:'Gold',title:'FOOTBALL PRIME 5.0',sub:'TRAIN. PLAY. BECOME PRIME.',intro:true},week:[],tab:'home',sub:''}}
+function def(){return{prof:null,attr:{Tempo:50,Dribbling:50,Passspiel:50,Schuss:50,Abschluss:50,Spielübersicht:50,Verteidigung:50,Ballkontrolle:50,Beweglichkeit:50,Ausdauer:50},hist:[],train:[],matches:[],xp:0,flames:0,claimed:{},missions:DM.slice(),lib:DL.slice(),videos:[],career:{club:'',history:[],offers:[],custom:[],mode:'player',season:1,matches:[]},set:{sound:true,vol:.5,theme:'Gold',title:'Football Prime',sub:'TRAIN. PLAY. BECOME PRIME.',intro:true},week:[],tab:'home',sub:''}}
 let S=def();
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(def(),JSON.parse(r))}catch(e){}
-if(S.set && S.set.title==='FOOTBALL PRIME') S.set.title='FOOTBALL PRIME 5.0';
+if(S.set && (S.set.title==='Football Prime 5.0' || S.set.title==='FOOTBALL PRIME 5.0' || S.set.title==='FOOTBALL PRIME')) S.set.title='Football Prime';
 if(S.set && S.set.sub==='Training. Spiele. Karriere.') S.set.sub='TRAIN. PLAY. BECOME PRIME.';
 if(S.set && S.set.theme==='Blau') S.set.theme='Gold';
 // Migration: alte 6er-Attribute werden sicher in das 10er-System übernommen.
@@ -107,7 +112,7 @@ function val(i){return $(i).value}
 /* ---------- Einrichtung ---------- */
 function setup(){
  $('nv').innerHTML='';
- $('v').innerHTML=card('Willkommen bei FOOTBALL PRIME',`<label>Spielername</label><input id="n"><label>Alter</label><input id="a" type="number" min="5" max="60"><label>Verein</label><input id="c"><label>Hauptposition</label><select id="p">${opts(['Torwart','Innenverteidiger','Außenverteidiger','Defensives Mittelfeld','Zentrales Mittelfeld','Offensives Mittelfeld','Flügel','Stürmer'])}</select><label>Nebenposition (optional)</label><input id="p2"><label>Starker Fuß</label><select id="f">${opts(['Rechts','Links','Beidfüßig'])}</select><label>Rückennummer (optional)</label><input id="r" type="number"><label>Liga / Spielklasse (optional)</label><input id="l"><button onclick="mkProf()">Profil erstellen</button>`)
+ $('v').innerHTML=card('Willkommen bei Football Prime',`<label>Spielername</label><input id="n"><label>Alter</label><input id="a" type="number" min="5" max="60"><label>Verein</label><input id="c"><label>Hauptposition</label><select id="p">${opts(['Torwart','Innenverteidiger','Außenverteidiger','Defensives Mittelfeld','Zentrales Mittelfeld','Offensives Mittelfeld','Flügel','Stürmer'])}</select><label>Nebenposition (optional)</label><input id="p2"><label>Starker Fuß</label><select id="f">${opts(['Rechts','Links','Beidfüßig'])}</select><label>Rückennummer (optional)</label><input id="r" type="number"><label>Liga / Spielklasse (optional)</label><input id="l"><button onclick="mkProf()">Profil erstellen</button>`)
 }
 function mkProf(){
  const n=val('n').trim(),a=+val('a'),c=val('c').trim();
@@ -243,7 +248,7 @@ function videos(){
 function addVid(){const u=val('vu').trim();if(!/^https?:\/\//.test(u)||!val('vt').trim()){alert('Bitte Titel und einen Link mit https:// eingeben.');return}S.videos.push({t:val('vt'),u});save();render()}
 function primeai(){
  const endpoint=esc(S.set.aiEndpoint||'');
- return card('PRIME KI COACH',`<div class="prime-stage"><div class="mu">FOOTBALL PRIME · INTELLIGENT PERFORMANCE</div><h2>Dein persönlicher Coach.</h2><p class="prime-note">Stelle Fragen zu deinem Fußball, deinen Trainings und deiner Entwicklung. Die App übermittelt deine relevanten Statistiken an deinen konfigurierten KI-Server.</p></div><label>Sicherer Backend-Endpunkt (vom Betreiber bereitgestellt)</label><input id="aiEndpoint" type="url" placeholder="https://dein-server.example/api" value="${endpoint}"><button class="g" onclick="saveAiEndpoint()">Server-Adresse speichern</button><div class="prime-chat" id="primeChat" aria-live="polite"><div class="prime-msg prime-ai">PRIME KI: Ich kann deine eingetragenen Trainings und Spiele auswerten, sobald der Server verbunden ist.</div></div><label>Deine Frage</label><textarea id="primeQuestion" rows="3" placeholder="Zum Beispiel: Was sollte ich diese Woche trainieren?"></textarea><button onclick="askPrimeAI()">An PRIME KI senden</button><p class="prime-note">Datenschutz: Nur die für die Frage nötigen Profil- und Leistungsdaten werden an deinen Server gesendet. Der API-Schlüssel gehört ausschließlich auf den Server, niemals in diese HTML-Datei.</p>`)
+ return card('PRIME KI COACH',`<div class="prime-stage"><div class="mu">Football Prime · INTELLIGENT PERFORMANCE</div><h2>Dein persönlicher Coach.</h2><p class="prime-note">Stelle Fragen zu deinem Fußball, deinen Trainings und deiner Entwicklung. Die App übermittelt deine relevanten Statistiken an deinen konfigurierten KI-Server.</p></div><label>Sicherer Backend-Endpunkt (vom Betreiber bereitgestellt)</label><input id="aiEndpoint" type="url" placeholder="https://dein-server.example/api" value="${endpoint}"><button class="g" onclick="saveAiEndpoint()">Server-Adresse speichern</button><div class="prime-chat" id="primeChat" aria-live="polite"><div class="prime-msg prime-ai">PRIME KI: Ich kann deine eingetragenen Trainings und Spiele auswerten, sobald der Server verbunden ist.</div></div><label>Deine Frage</label><textarea id="primeQuestion" rows="3" placeholder="Zum Beispiel: Was sollte ich diese Woche trainieren?"></textarea><button onclick="askPrimeAI()">An PRIME KI senden</button><p class="prime-note">Datenschutz: Nur die für die Frage nötigen Profil- und Leistungsdaten werden an deinen Server gesendet. Der API-Schlüssel gehört ausschließlich auf den Server, niemals in diese HTML-Datei.</p>`)
  +card('Deine aktuellen Daten',`<div class="grid"><div class="st"><b>${ges()}</b><span>GES</span></div><div class="st"><b>${S.matches.length}</b><span>Spiele</span></div><div class="st"><b>${tot(S,'g')}</b><span>Tore</span></div><div class="st"><b>${tot(S,'a')}</b><span>Assists</span></div><div class="st"><b>${S.train.length}</b><span>Trainings</span></div><div class="st"><b>${hrs(S).toFixed(1)}</b><span>Stunden</span></div></div>`)
 }
 function saveAiEndpoint(){const x=val('aiEndpoint').trim().replace(/\/$/,'');if(x&&!/^https:\/\//i.test(x)){alert('Bitte eine sichere HTTPS-Adresse eingeben.');return}S.set.aiEndpoint=x;save();alert('Server-Adresse gespeichert.');}
@@ -260,7 +265,7 @@ function upImg(inp,cb,max){const f=inp.files[0];if(!f)return;const r=new FileRea
 function set(){
  return card('Einstellungen',`<label><input type="checkbox" style="width:auto" ${S.set.sound?'checked':''} onchange="S.set.sound=this.checked;save()"> Sound an</label><label>Lautstärke</label><input type="range" min="0" max="1" step=".1" value="${S.set.vol}" onchange="S.set.vol=+this.value;save();beep()"><label>Theme</label><div>${Object.keys(THEMES).map(t=>`<button class="s ${S.set.theme==t?'':'g'}" onclick="S.set.theme='${t}';save();render()">${t}</button>`).join('')}</div>`)
  +card('Daten',`<button onclick="exp()">Exportieren</button><label class="btn g" style="display:inline-block">Importieren<input type="file" accept=".json" hidden onchange="imp(this)"></label><button class="r" onclick="if(confirm('Wirklich ALLE Daten löschen?')){localStorage.removeItem(KEY);S=def();render()}">Alles löschen</button>`)
- +card('Info','<p class="mu">FOOTBALL PRIME 5.0 – erster Umbau-Schritt. Profildaten und Statistiken bleiben lokal auf diesem Gerät. KI- und Videoanfragen werden nur nach aktiver Nutzung an den eingetragenen Server übertragen. Vereinsangebote sind virtuell.</p>')
+ +card('Info','<p class="mu">Football Prime – erster Umbau-Schritt. Profildaten und Statistiken bleiben lokal auf diesem Gerät. KI- und Videoanfragen werden nur nach aktiver Nutzung an den eingetragenen Server übertragen. Vereinsangebote sind virtuell.</p>')
 }
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='football-prime-daten.json';a.click()}
 function imp(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.attr||!d.matches)throw 0;S=Object.assign(def(),d);save();render();alert('Import erfolgreich.')}catch(e){alert('Datei ungültig.')}};r.readAsText(f)}
@@ -272,7 +277,7 @@ function admin(){
  +card('XP, FLAMES, Level',`<div class="mu">XP ${S.xp} · FLAMES ${S.flames} · Level ${lvl()}</div><button class="s" onclick="addXp(100);save();render()">+100 XP</button><button class="s" onclick="addXp(500);save();render()">+500 XP</button><button class="s" onclick="S.flames+=5;save();render()">+5 FLAMES</button><button class="s" onclick="S.flames+=10;save();render()">+10 FLAMES</button><button class="s" onclick="addXp(100);save();render()">+1 Level</button>${R('Fortschritt','S.xp=0;S.flames=0;S.claimed={}')}`)
  +card('Missionen',S.missions.map((m,i)=>`<div class="row"><span>${esc(m.t)} <span class="mu">${m.xp} XP</span></span><span><button class="s g" onclick="editM(${i})">Bearb.</button><button class="s r" onclick="S.missions.splice(${i},1);save();render()">✕</button></span></div>`).join('')+`<input id="mt" placeholder="Neue Mission"><select id="mk"><option value="train">Trainings</option><option value="tech">Technik-Minuten</option><option value="match">Spiele</option></select><input id="mz" type="number" value="1" placeholder="Ziel"><input id="mx" type="number" value="30" placeholder="XP"><button onclick="addM()">Mission erstellen</button>`)
  +card('Karriere',`<div class="mu">Verein: ${esc(S.career.club)}</div><select id="ac">${allClubs().map(c=>`<option>${esc(c.n)}</option>`).join('')}</select><button class="s" onclick="adminOffer()">Angebot erstellen</button><button class="s g" onclick="S.career.club=val('ac');S.career.history.push({club:val('ac'),from:today()});save();render()">Als Verein setzen</button><div>${S.career.offers.map((o,i)=>`<div class="row"><span>${esc(o.n)}</span><button class="s r" onclick="S.career.offers.splice(${i},1);save();render()">✕</button></div>`).join('')}</div><h3 style="margin-top:10px">Eigener Verein</h3><input id="kn" placeholder="Name"><select id="kl">${opts(LG.slice(1))}</select><input id="kr" type="number" value="60"><button class="s" onclick="addClub()">Verein anlegen</button><br>${R('Karriere','S.career={club:S.prof.club,history:[{club:S.prof.club,from:today()}],offers:[],custom:S.career.custom}')}`)
- +card('App-Design',`<label>Titel</label><input id="at" value="${esc(S.set.title)}"><label>Untertitel</label><input id="as" value="${esc(S.set.sub)}"><button onclick="S.set.title=val('at');S.set.sub=val('as');save();render()">Speichern</button><button class="g" onclick="S.set.title='FOOTBALL PRIME';S.set.sub='Training. Spiele. Karriere.';save();render()">Standard</button><label>Logo hochladen</label><input type="file" accept="image/*" onchange="upImg(this,i=>{S.set.logo=i;save();alert('Logo gespeichert.')},128)">`)
+ +card('App-Design',`<label>Titel</label><input id="at" value="${esc(S.set.title)}"><label>Untertitel</label><input id="as" value="${esc(S.set.sub)}"><button onclick="S.set.title=val('at');S.set.sub=val('as');save();render()">Speichern</button><button class="g" onclick="S.set.title='Football Prime';S.set.sub='Training. Spiele. Karriere.';save();render()">Standard</button><label>Logo hochladen</label><input type="file" accept="image/*" onchange="upImg(this,i=>{S.set.logo=i;save();alert('Logo gespeichert.')},128)">`)
  +card('Zurücksetzen',R('Statistiken','S.matches=[]')+R('Trainingsdaten','S.train=[];S.hist=[];S.attr=def().attr')+R('Spielerfortschritt','S.attr=def().attr;S.hist=[];S.xp=0;S.flames=0;S.claimed={}'))
 }
 function addM(){if(!val('mt').trim())return alert('Bitte einen Titel eingeben.');S.missions.push({id:'m'+Date.now(),t:val('mt'),k:val('mk'),n:+val('mz')||1,xp:+val('mx')||10});save();render()}
@@ -281,7 +286,7 @@ function adminOffer(){const c=allClubs().find(x=>x.n==val('ac'));S.career.offers
 function addClub(){if(!val('kn').trim())return alert('Bitte einen Namen eingeben.');S.career.custom.push({n:val('kn'),l:val('kl'),r:+val('kr')||60});save();render()}
 
 
-/* ================= FOOTBALL PRIME 5.0 – ERWEITERTE FUNKTIONEN ================= */
+/* ================= Football Prime – ERWEITERTE FUNKTIONEN ================= */
 let activeWorkout=null, workoutIndex=0;
 const SKILL_HELP={
  Tempo:'Antritt und Sprinttempo',Dribbling:'Dribbling unter Gegnerdruck',Passspiel:'Kurz- und Langpass',Schuss:'Schusstechnik und Präzision',
@@ -427,7 +432,7 @@ function primeai(){
 function set(){
  return card('Profil & Einstellungen',`<p class="mu">${esc(S.prof.name)} · ${esc(S.prof.club)} · ${esc(S.prof.pos)}</p><button onclick="go('more','prof')">Profil bearbeiten</button><label>Sound</label><label><input type="checkbox" style="width:auto" ${S.set.sound?'checked':''} onchange="S.set.sound=this.checked;save()"> Soundeffekte</label><label>Antworten vorlesen</label><label><input type="checkbox" style="width:auto" ${S.set.voice?'checked':''} onchange="S.set.voice=this.checked;save()"> PRIME VOICE aktivieren</label><label>Theme</label><div>${Object.keys(THEMES).map(t=>`<button class="s ${S.set.theme===t?'':'g'}" onclick="S.set.theme='${t}';save();render()">${t}</button>`).join('')}</div>`)
  +card('Daten verwalten',`<button onclick="exp()">Daten exportieren</button><label class="btn g" style="display:inline-block">Daten importieren<input type="file" accept=".json" hidden onchange="imp(this)"></label><button class="r" onclick="if(confirm('Wirklich alle lokalen Daten löschen?')){localStorage.removeItem(KEY);S=def();render()}">Alle Daten löschen</button><p class="mu">Exportiere regelmäßig eine Sicherung deiner Daten.</p>`)
- +card('Über FOOTBALL PRIME 5.0',`<p>Training, Spielstatistik und eine simulierte Fußballkarriere in einer App. Deine Daten werden lokal auf diesem Gerät gespeichert. Vereins- und Karriereangebote in der Karriere sind fiktiv.</p><p class="mu">Automatische Ligadaten, echte KI, Videoanalyse und Cloud-Synchronisierung benötigen zusätzliche Server- und Datenanbieter-Integrationen.</p>`);
+ +card('Über Football Prime',`<p>Training, Spielstatistik und eine simulierte Fußballkarriere in einer App. Deine Daten werden lokal auf diesem Gerät gespeichert. Vereins- und Karriereangebote in der Karriere sind fiktiv.</p><p class="mu">Automatische Ligadaten, echte KI, Videoanalyse und Cloud-Synchronisierung benötigen zusätzliche Server- und Datenanbieter-Integrationen.</p>`);
 }
 function admin(){
  return card('Admin Panel – lokale Testfunktionen',`<p class="mu">Dieses Admin Panel ist nur für lokale Tests. Es ist nicht sicher geschützt und sollte nicht öffentlich als Admin-Zugang verwendet werden.</p><div class="row"><span>GES</span><b>${ges()}</b></div><div class="row"><span>XP / Level</span><b>${S.xp} / ${lvl()}</b></div><button onclick="addXp(100);save();render()">+100 XP</button><button class="g" onclick="addXp(500);save();render()">+500 XP</button><label>Attribute anpassen</label>${AK.map(k=>`<label>${k}</label><input id="adm_${k}" type="number" min="1" max="99" value="${S.attr[k]}">`).join('')}<button onclick="AK.forEach(k=>S.attr[k]=Math.max(1,Math.min(99,+val('adm_'+k)||S.attr[k])));S.hist.push({d:today(),ges:ges()});save();render()">Attribute speichern</button><label>Verein für Angebot auswählen</label><select id="ac">${allClubs().map(c=>`<option>${esc(c.n)}</option>`).join('')}</select><button onclick="adminOffer()">Ausgewählten Verein als Angebot senden</button><button class="g" onclick="S.career.club=val('ac');S.career.history.push({club:val('ac'),from:today()});save();render()">Karriereverein setzen</button><button class="r" onclick="if(confirm('Karriere zurücksetzen?')){S.career={club:S.prof.club,history:[{club:S.prof.club,from:today()}],offers:[],custom:[],mode:'player',season:1,matches:[]};save();render()}">Karriere zurücksetzen</button><button class="r" onclick="if(confirm('Nur Trainings- und Spielstatistiken löschen?')){S.train=[];S.matches=[];S.hist=[];save();render()}">Trainings- & Spielstatistik zurücksetzen</button>`);
@@ -444,7 +449,7 @@ function fp5Stats(a){return `<div class="grid">${a.map(x=>`<div class="fp5-stat"
 /* Ersteinrichtung: erweitert das echte Vereinsprofil; Karriere bleibt unabhängig. */
 function setup(){
  $('nv').innerHTML='';
- $('v').innerHTML=card('WILLKOMMEN BEI FOOTBALL PRIME 5.0',`
+ $('v').innerHTML=card('WILLKOMMEN BEI Football Prime',`
  <div class="fp5-kicker">DEIN SPIELERPROFIL</div><p class="mu" style="margin:8px 0 14px">Einmal einrichten – deine Angaben kannst du später ändern.</p>
  <label>Wie heißt du?</label><input id="n" maxlength="40" placeholder="Spielername">
  <label>Wie alt bist du?</label><input id="a" type="number" min="5" max="99" placeholder="Alter">
@@ -478,7 +483,7 @@ function render(){
  const ann=S.fp5.announcements.filter(x=>x.active);
  if(ann.length && S.fp5.lastAnnouncement!==ann[ann.length-1].id){
    const a=ann[ann.length-1];S.fp5.lastAnnouncement=a.id;save();
-   setTimeout(()=>alert('FOOTBALL PRIME – ANKÜNDIGUNG\\n\\n'+a.title+'\\n'+a.body),150);
+   setTimeout(()=>alert('Football Prime – ANKÜNDIGUNG\\n\\n'+a.title+'\\n'+a.body),150);
  }
 }
 
@@ -557,7 +562,7 @@ function admin(){
  }
  return card('PRIME ADMIN PANEL',`<div class="fp5-kicker">BESITZER-KONTROLLE</div><button class="g s" onclick="S.fp5.adminOpen=false;save();render()">Sperren</button>
  <div class="fp5-tabs"><button class="g" onclick="fp5AdminTab='announce';render()">Ankündigungen</button><button class="g" onclick="fp5AdminTab='design';render()">Design</button><button class="g" onclick="fp5AdminTab='roles';render()">Admins</button><button class="g" onclick="fp5AdminTab='tools';render()">Verwaltung</button></div>
- ${fp5AdminTab==='announce'?`<h3>Ankündigung veröffentlichen</h3><label>Titel</label><input id="annTitle" placeholder="z. B. FOOTBALL PRIME Update"><label>Nachricht</label><textarea id="annBody" rows="4" placeholder="Deine Nachricht an die Nutzer"></textarea><button onclick="fp5PublishAnnouncement()">Ankündigung veröffentlichen</button><h3 style="margin-top:16px">Gespeicherte Ankündigungen</h3>${S.fp5.announcements.map((a,i)=>`<div class="row"><span><b>${esc(a.title)}</b><div class="mu">${esc(a.body)}</div></span><button class="s r" onclick="S.fp5.announcements.splice(${i},1);save();render()">Löschen</button></div>`).join('')||'<p class="mu">Noch keine Ankündigungen.</p>'}`
+ ${fp5AdminTab==='announce'?`<h3>Ankündigung veröffentlichen</h3><label>Titel</label><input id="annTitle" placeholder="z. B. Football Prime Update"><label>Nachricht</label><textarea id="annBody" rows="4" placeholder="Deine Nachricht an die Nutzer"></textarea><button onclick="fp5PublishAnnouncement()">Ankündigung veröffentlichen</button><h3 style="margin-top:16px">Gespeicherte Ankündigungen</h3>${S.fp5.announcements.map((a,i)=>`<div class="row"><span><b>${esc(a.title)}</b><div class="mu">${esc(a.body)}</div></span><button class="s r" onclick="S.fp5.announcements.splice(${i},1);save();render()">Löschen</button></div>`).join('')||'<p class="mu">Noch keine Ankündigungen.</p>'}`
  :fp5AdminTab==='design'?`<h3>Globales Design</h3><label>Akzentfarbe für dieses Gerät</label><select id="globalTheme">${opts(Object.keys(THEMES),S.set.theme)}</select><button onclick="S.set.theme=val('globalTheme');save();render()">Globales Design anwenden</button><h3 style="margin-top:16px">Individuelles Nutzerdesign (lokale Demo)</h3><label>Nutzername</label><input id="designUser" placeholder="Nutzername"><label>Design</label><select id="userTheme">${opts(Object.keys(THEMES))}</select><button onclick="S.fp5.userThemes[val('designUser').trim()]=val('userTheme');save();alert('Lokale Designzuweisung gespeichert. Für echte Nutzerkonten ist ein Backend nötig.')">Design zuweisen</button>`
  :fp5AdminTab==='roles'?`<h3>Admin-Rechte (lokale Demo)</h3><label>Nutzername</label><input id="roleUser" placeholder="Nutzername / Konto-ID"><label>Rolle</label><select id="roleValue">${opts(['Admin','Moderator','Design-Admin','Ankündigungs-Admin'])}</select><button onclick="S.fp5.roles[val('roleUser').trim()]=val('roleValue');save();render()">Recht vergeben</button><div>${Object.entries(S.fp5.roles).map(([u,r])=>`<div class="row"><span>${esc(u)} · ${esc(r)}</span><button class="s r" onclick="delete S.fp5.roles['${esc(u)}'];save();render()">Entziehen</button></div>`).join('')}</div>`
  :`<h3>App-Verwaltung</h3><button class="g" onclick="exp()">Daten exportieren</button><button class="g" onclick="if(confirm('Karriere-Spielstand zurücksetzen?')){S.fp5.careerPlayer=null;S.fp5.careerLog=[];save();render()}">Karriere-Spielstand zurücksetzen</button><button class="g" onclick="S.fp5.announcements=[];save();render()">Alle Ankündigungen löschen</button><p class="fp5-muted">Änderungen wirken aktuell nur in diesem Browserprofil.</p>`}
@@ -571,7 +576,7 @@ function fp5PublishAnnouncement(){const title=val('annTitle').trim(),body=val('a
 function set(){
  return card('PROFIL & EINSTELLUNGEN',`<p class="mu">${esc(S.prof.name)} · ${esc(S.prof.club)} · ${esc(S.prof.pos)}</p><button onclick="go('more','prof')">Spielerprofil bearbeiten</button><label>Soundeffekte</label><label><input type="checkbox" style="width:auto" ${S.set.sound?'checked':''} onchange="S.set.sound=this.checked;save()"> Sound aktivieren</label><label>Antworten vorlesen</label><label><input type="checkbox" style="width:auto" ${S.set.voice?'checked':''} onchange="S.set.voice=this.checked;save()"> PRIME VOICE aktivieren</label><label>App-Farbe</label><div>${Object.keys(THEMES).map(t=>`<button class="s ${S.set.theme===t?'':'g'}" onclick="S.set.theme='${t}';save();render()">${t}</button>`).join('')}</div>`)
  +card('DATEN',`<button onclick="exp()">Daten exportieren</button><label class="btn g" style="display:inline-block">Daten importieren<input type="file" accept=".json" hidden onchange="imp(this)"></label><button class="r" onclick="if(confirm('Wirklich alle lokalen Daten löschen?')){localStorage.removeItem(KEY);S=def();S.fp5={announcements:[],roles:{},userThemes:{},ownerPinHash:'',adminOpen:false,matchSource:'',careerPlayer:null,careerLog:[]};render()}">Alle Daten löschen</button><p class="mu">Deine Daten werden aktuell lokal auf diesem Gerät gespeichert.</p>`)
- +card('ÜBER FOOTBALL PRIME 5.0',`<p>HOME und TRAINING behalten ihre bisherige Funktion. SPIELE zeigt deine Vereinsübersicht; KARRIERE ist ein unabhängiger, simulierter Spielstand.</p><p class="mu">Automatische Vereinsdaten, echte KI und Synchronisierung benötigen Server- und Datenanbieter-Anbindungen.</p>`);
+ +card('ÜBER Football Prime',`<p>HOME und TRAINING behalten ihre bisherige Funktion. SPIELE zeigt deine Vereinsübersicht; KARRIERE ist ein unabhängiger, simulierter Spielstand.</p><p class="mu">Automatische Vereinsdaten, echte KI und Synchronisierung benötigen Server- und Datenanbieter-Anbindungen.</p>`);
 }
 
 /* ---------- Start ---------- */
@@ -580,4 +585,14 @@ function start(){
  if(S.set.intro&&S.prof){$('ov').innerHTML=`<div class="ov" onclick="this.remove()"><h1>${esc(S.set.title)}</h1><p>Tippen zum Starten</p></div>`;setTimeout(()=>{const o=document.querySelector('.ov');o&&o.remove()},1800)}
 }
 start();
-</script></body></html>
+</script>
+<script>
+// Football Prime PWA: Service Worker registrieren (nur über HTTPS/GitHub Pages).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .catch(error => console.warn('Service Worker konnte nicht registriert werden:', error));
+  });
+}
+</script>
+</body></html>

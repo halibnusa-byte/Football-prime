@@ -1,12 +1,12 @@
 {
-  "name": "FOOTBALL PRIME",
-  "short_name": "PRIME",
+  "name": "Football Prime",
+  "short_name": "Football",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#08090c",
   "theme_color": "#08090c",
-  "description": "FOOTBALL PRIME 5.0 – Training, Spiele und Karriere",
+  "description": "Football Prime – Training, Spiele und Karriere",
   "icons": [
     {
       "src": "icon.svg",
