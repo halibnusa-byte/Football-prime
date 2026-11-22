@@ -46,7 +46,12 @@ nav button{min-width:0;background:none;color:var(--mu);border-radius:0;margin:0;
 .fp5-tabs button{white-space:nowrap}
 .fp5-lock{border:1px solid #d6b34a66;background:#17140c;border-radius:14px;padding:14px}
 .fp5-notice{border-left:3px solid var(--ac);padding:9px 12px;background:#ffffff08;border-radius:8px;color:var(--mu);font-size:12px;margin:9px 0}
-</style></head><body>
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head><body>
 <header><h1 id="ttl">FOOTBALL PRIME</h1><small id="sub">Training. Spiele. Karriere.</small></header>
 <main id="v"></main><nav id="nv"></nav><div id="ov"></div>
 <script>
@@ -580,4 +585,14 @@ function start(){
  if(S.set.intro&&S.prof){$('ov').innerHTML=`<div class="ov" onclick="this.remove()"><h1>${esc(S.set.title)}</h1><p>Tippen zum Starten</p></div>`;setTimeout(()=>{const o=document.querySelector('.ov');o&&o.remove()},1800)}
 }
 start();
-</script></body></html>
+</script>
+<script>
+// FOOTBALL PRIME PWA: Service Worker registrieren (nur über HTTPS/GitHub Pages).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .catch(error => console.warn('Service Worker konnte nicht registriert werden:', error));
+  });
+}
+</script>
+</body></html>

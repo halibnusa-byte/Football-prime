@@ -1,1 +1,18 @@
-{"name":"FOOTBALL PRIME","short_name":"PRIME","start_url":"./index.html","display":"standalone","background_color":"#090909","theme_color":"#090909","description":"Dein persönlicher Fußball-Comeback-Tracker","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "FOOTBALL PRIME",
+  "short_name": "PRIME",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "description": "FOOTBALL PRIME 5.0 – Training, Spiele und Karriere",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
